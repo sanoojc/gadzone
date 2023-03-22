@@ -133,7 +133,6 @@ export async function monthRevenue(req,res){
 
 export async function salesReport(req, res){
 
-    console.log("dfaf", req.query.filter);
     try {
       let startDate = new Date(new Date().setDate(new Date().getDate() - 8));
       let endDate = new Date();

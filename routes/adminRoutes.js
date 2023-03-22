@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import verifyAdmin from '../middleware/verifyAdmin.js'
-import { addProducts, adminLogin, listProduct, editProduct, userBan,displayUser, displayProducts, editUser, addCategory, editCategory, listCategory, showCategory, addOffer, getOfferPage, adminLogout, getAdminLogin, addCoupon, editCoupon, showCoupon, listCoupon, getAddProduct, getAdminHome, getEditProduct, showOrders, getEditOffer, editOffer, getEditcategory, getAddCategory, getViewOrder, updateOrder, monthRevenue, getSalesReport, getAddCoupon, getEditCoupon, getAddOffer, listOffer } from '../controllers/adminController.js'
+import { addProducts, adminLogin, listProduct, editProduct, userBan,displayUser, displayProducts, editUser, addCategory, editCategory, listCategory, showCategory, addOffer, getOfferPage, adminLogout, getAdminLogin, addCoupon, editCoupon, showCoupon, listCoupon, getAddProduct, getAdminHome, getEditProduct, showOrders, getEditOffer, editOffer, getEditcategory, getAddCategory, getViewOrder, updateOrder, monthRevenue, getAddCoupon, getEditCoupon, getAddOffer, listOffer, salesReport } from '../controllers/adminController.js'
 
 const router=express.Router()
 
@@ -45,7 +45,7 @@ router.get('/orders',showOrders)
 router.get('/addCategory',getAddCategory)
 router.get('/viewOrder/:id',getViewOrder)
 router.get('/update-order', updateOrder)   
-router.get('/salesReport',getSalesReport)
+router.get('/salesReport',salesReport)
 router.get('/addCoupon',getAddCoupon)
 router.get('/monthRevenue',monthRevenue)
 router.get('/addOffer',getAddOffer)
