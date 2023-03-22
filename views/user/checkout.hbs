@@ -1,0 +1,355 @@
+<!-- Navbar Start -->
+<div class="container-fluid bg-dark mb-30">
+    <div class="row px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+            <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse"
+                href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
+                <i class="fa fa-angle-down text-dark"></i>
+            </a>
+            <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
+                id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
+                <div class="navbar-nav w-100">
+
+                    <a href="" class="nav-item nav-link">laptops</a>
+                    <a href="" class="nav-item nav-link">phones</a>
+                    <a href="" class="nav-item nav-link">airpods</a>
+                    <a href="" class="nav-item nav-link">smart watches</a>
+                    <a href="" class="nav-item nav-link">macbook</a>
+                    <a href="" class="nav-item nav-link">I phones</a>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-9">
+            <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
+                <a href="" class="text-decoration-none d-block d-lg-none">
+                    <span class="h1 text-uppercase text-dark bg-light px-2">Gad</span>
+                    <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Zone</span>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto py-0">
+                        <a href="" class="nav-item nav-link active">Home</a>
+                        <a href="/" class="nav-item nav-link">Shop</a>
+                        <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Account <i
+                                    class="fa fa-angle-down mt-1"></i></a>
+                            <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+                                <a href="/userProfile" class="dropdown-item">profile</a>
+                                <a href="/login" class="dropdown-item">Login</a>
+                                <a href="/signup" class="dropdown-item">Signup</a>
+                            </div>
+                        </div>
+                        <a href="/logout" class="nav-item nav-link">Logout</a>
+                    </div>
+                    <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+                        <a href="" class="btn px-0">
+                            <i class="fas fa-heart text-primary"></i>
+                            <span class="badge text-secondary border border-secondary rounded-circle"
+                                style="padding-bottom: 2px;">0</span>
+                        </a>
+                        <a href="/cart" class="btn px-0 ml-3">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge text-secondary border border-secondary rounded-circle"
+                                style="padding-bottom: 2px;">0</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+<!-- Checkout Start -->
+<form action="/checkout" method="post">
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+
+            <div class="col-lg-8">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing
+                        Address</span></h5>
+                <div class="bg-light p-30 mb-5">
+                    <div class="row">
+
+                        {{#each adress}}
+                        <label for="{{this.id}}" class="addressCard p-2 d-flex justify-content-between w-100">
+                            <div class="address">
+                                <ul class="addressList">
+                                    <li class="userName">{{this.name}}</li>
+                                    <li>{{this.adress}}</li>
+                                    <li>{{this.city}}</li>
+                                    <li>{{this.state}}</li>
+                                    <li>{{this.pin}}</li>
+                                    <li>{{this.mobile}}</li>
+                                    <div class="mt-3">
+                                        <a class="btn bg-dark text-white" href="/removeAddress/{{this.id}}">Delete</a>
+                                    </div>
+                                </ul>
+                            </div>
+                            <div class="selectaddress d-flex align-items-center pe-3">
+                                <input type="radio" name="address" id="{{this.id}}" required value="{{this.id}}">
+                            </div>
+                        </label>
+                        {{/each}}
+                        </label>
+                        <div class="col-md-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="shipto">
+                                <label class="custom-control-label" for="shipto" data-toggle="collapse"
+                                    data-target="#shipping-address">Ship to different address</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse mb-5" id="shipping-address">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span
+                            class="bg-secondary pr-3">Shipping Address</span></h5>
+                    <div class="bg-light p-30">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label>First Name</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>E-mail</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Mobile No</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Address Line 1</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Address Line 2</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Country</label>
+                                <select class="custom-select">
+                                    <option selected>United States</option>
+                                    <option>Afghanistan</option>
+                                    <option>Albania</option>
+                                    <option>Algeria</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>City</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>State</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>ZIP Code</label>
+                                <input class="form-control" type="text" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- <div class="input-group height-1rem pt-3 w-3rem ">
+                <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
+                <div class="input-group-append">
+                    <button class="btn btn-primary " style="height: 3rem;">Apply Coupon</button>
+                </div>
+            </div> --}}
+
+
+            <div class="col-lg-4">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order
+                        Total</span></h5>
+                   <form class="mb-30">
+                            <div class="input-group">
+                                <input type="text" id="couponCode" class="form-control border-0 p-4" placeholder="Coupon Code"
+                                    name="couponCode">
+                                <div class="input-group-append">
+                                <button class="btn btn-primary" onclick="checkCoupon()" type="button">Apply Coupon </button>
+                                </div>
+                            </div>
+                        </form>
+
+                <div class="bg-light p-30 mb-5 mt-4">
+                    <div class="border-bottom">
+                        <h6 class="mb-3">Products</h6>
+                        {{#each product}}
+                        <div class="d-flex justify-content-between">
+                            <p>{{this.productName}}</p>
+                            <p>{{this.cartQuantity}}</p>
+                            <p>{{this.totalPrice}}</p>
+                        </div>
+                        {{/each}}
+
+                    </div>
+
+                    <div class="border-bottom pt-3 pb-2">
+
+                     
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6>Subtotal</h6>
+                            <h6>{{totalAmount}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6>coupon</h6>
+                            <h6 id="cashBack"></h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">0</h6>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5>Total</h5>
+                            <input type="hidden" id="discountedAmount" value="{{this.totalAmount}}" name="totalAmount">
+                            <input type="hidden" id="purchaseAmount" value="{{this.totalAmount}}">
+                            <h5 id="totalAmount">{{totalAmount}}</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5 ">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span
+                            class="bg-secondary pr-3">Payment</span></h5>
+                    <div class="bg-light p-30">
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" required name="payment" id="paypal"
+                                    value="cod">
+                                <label class="custom-control-label" for="paypal">cash on delivery</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" required name="payment"
+                                    id="directcheck" value="online">
+                                <label class="custom-control-label" for="directcheck">online payment</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-block btn-primary font-weight-bold py-3" type="submit">Place
+                            Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Checkout End -->
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-secondary mt-5 pt-5">
+    <div class="row px-xl-5 pt-5">
+        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+            <h5 class="text-secondary text-uppercase mb-4">ABOUT</h5>
+            <p class="mb-4">Contact Us</p>
+            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
+            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+            <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
+            <div class="d-flex">
+                <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-12">
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h5 class="text-secondary text-uppercase mb-4">HELP</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Payment</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shipping</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Cancellation
+                        </a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Return</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>FAQ's</a>
+                        <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h5 class="text-secondary text-uppercase mb-4">policy</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Return
+                            policy</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Terms of
+                            use</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>security</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Privacy</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h5 class="text-secondary text-uppercase mb-4">Quick shop</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>cart</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>whishlist</a>
+                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>orders</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Footer End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+ <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+    function checkCoupon(){
+       let coupon=document.getElementById('couponCode')
+       let purchaseAmount=parseInt(document.getElementById('purchaseAmount').value)
+        axios.get('/applyCoupon/'+coupon.value+'/'+purchaseAmount).then((result)=>{
+            console.log(result.data)
+              let discountedAmount=document.getElementById('discountedAmount')
+            if(result.data.success){
+              discountedAmount.value=result.data.discountedAmount;
+              document.getElementById('totalAmount').textContent=result.data.discountedAmount;
+              document.getElementById('cashBack').textContent=result.data.cashback;
+            }
+            else{
+                discountedAmount.value=result.data.discountedAmount;
+              document.getElementById('totalAmount').textContent=result.data.discountedAmount;
+                document.getElementById('cashBack').textContent='Invalid Coupon'
+            }
+        })
+    }
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
