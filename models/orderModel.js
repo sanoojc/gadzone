@@ -18,7 +18,7 @@ const orderSchema=mongoose.Schema({
     quantity:Number,
     dispatch:{
         type:Date,
-        default: new Date(new Date().setDate(new Date().getDate() + 7))
+        default: new Date(new Date().setDate(new Date().getDate()))
     },
     address:{
         type:Object

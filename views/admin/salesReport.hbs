@@ -138,25 +138,157 @@
 
   <main id="main" class="main">
                <h2 class="text-center pb-4 pt-4">SALES REPORT</h2>
+<div class="d-flex justify-content-between">
+                           <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <a href="/admin/orders">
+                    <h5 class="card-title">Orders</h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>{{salesCount}}</h6>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Revenue</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{salesSum}}</h6>
+
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <a href="/admin/users">
+                    <h5 class="card-title">Customers</h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-people"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>{{userCount}}</h6>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+            </div>
+            <div class="input-group">
+              <form action="/admin/salesReport" method="get">
+                From: <input class="form-control" type="date" name="startDate"> To: <input class="form-control"
+                  type="date" name="endDate">
+                <button type="submit" class="btn btn-sm btn-warning rounded mt-4">Filter</button>
+              </form>
+            </div>
+              <div class=" mt-4 ms-5 mb-4">
+              <a href="/admin/salesReport?filter=thisMonth" class="btn btn-sm border btn-light" type="button"> This Month </a>
+              <a href="/admin/salesReport?filter=lastMonth" class="btn btn-sm border btn-light" type="button"> Last Month </a>
+              <a href="/admin/salesReport?filter=thisYear" class="btn btn-sm border btn-light" type="button"> This Year </a>
+              <a href="/admin/salesReport?filter=lastYear" class="btn btn-sm border btn-light" type="button"> Last Year </a>
+            </div>
+
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
+                    <th scope="col">NO</th>
+                    <th scope="col">user</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Payment Status</th>
                   </tr>
                 </thead>
                 <tbody>
+                  
+                    {{#each deliveredOrders}}
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
+                    <th scope="row">{{inc @index}}</th>
+                    <td>{{this.address.name}}</td>
+                    <td>{{this.product.productName}}</td>
+                    <td>{{this.dispatch}}</td>
+                    <td>{{this.product.productPrice}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{this.total}}</td>
+                    <td>{{this.orderStatus}}</td>
+                    <td>{{this.paymentStatus}}</td>
                   </tr>
+                    {{/each}}
                  
                 </tbody>
               </table>
@@ -166,6 +298,17 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
+
+<script>
+  function downloadPDF() {
+    console.log('jii')
+    const table = document.getElementById('table-id');
+    const tableHTML = table.outerHTML;
+    const fileName = 'table' + new Date() + '.pdf';
+
+    html2pdf().from(tableHTML).save(fileName);
+  }
+</script>
   <!-- Vendor JS Files -->
   <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

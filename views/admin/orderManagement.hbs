@@ -190,10 +190,22 @@
                     <i class="bi bi-three-dots-vertical"></i>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=pending">Make Pending</a></li>
-                    <li><a class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=shipped">Make shipped </a></li>
-                    <li><a class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=cancelled">Make cancelled</a></li>
-                    <li><a class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=delivered">Make Delivered</a></li>
+                    {{#ifEquals this.orderStatus 'pending'}}
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=shipped">Make shipped </a></li>
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=cancelled">Make cancelled</a></li>
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=delivered">Make Delivered</a></li>
+                 {{/ifEquals}}
+                    {{#ifEquals this.orderStatus 'shipped' }}
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=cancelled">Make cancelled</a></li>
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=delivered">Make Delivered</a></li>
+                    {{/ifEquals}}
+                    {{#ifEquals this.orderStatus 'cancelled' }}
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=cancelled">Make cancelled</a></li>
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=delivered">Make Delivered</a></li>
+                    {{/ifEquals}}
+                    {{#ifEquals this.orderStatus 'delivered' }}
+                    <li><a onclick="return confirm('are you sure want to change ')" class="dropdown-item" href="/admin/update-order?id={{this._id}}&status=returned">Make returned</a></li>
+                    {{/ifEquals}}
                   </ul>
                 </div>
               </td>

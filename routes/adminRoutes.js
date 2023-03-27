@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import verifyAdmin from '../middleware/verifyAdmin.js'
-import { addProducts, adminLogin, listProduct, editProduct, userBan,displayUser, displayProducts, editUser, addCategory, editCategory, listCategory, showCategory, addOffer, getOfferPage, adminLogout, getAdminLogin, addCoupon, editCoupon, showCoupon, listCoupon, getAddProduct, getAdminHome, getEditProduct, showOrders, getEditOffer, editOffer, getEditcategory, getAddCategory, getViewOrder, updateOrder, monthRevenue, getAddCoupon, getEditCoupon, getAddOffer, listOffer, salesReport } from '../controllers/adminController.js'
+import { addProducts, adminLogin, listProduct, editProduct, userBan,displayUser, displayProducts, addCategory, editCategory, listCategory, showCategory, addOffer, getOfferPage, adminLogout, getAdminLogin, addCoupon, editCoupon, showCoupon, listCoupon, getAddProduct, getAdminHome, getEditProduct, showOrders, getEditOffer, editOffer, getEditcategory, getAddCategory, getViewOrder, updateOrder, monthRevenue, getAddCoupon, getEditCoupon, getAddOffer, listOffer, salesReport, search } from '../controllers/adminController.js'
 
 const router=express.Router()
 
@@ -52,7 +52,6 @@ router.get('/addOffer',getAddOffer)
 router.get('/listOffer/:id',listOffer)
 router.get('/userControl/:id',userBan)
 
-router.post('/editUser/:id',editUser)
 router.post('/addCategory', addCategory)
 router.post('/editCategory/:id',editCategory)
 router.post('/addProducts', upload.fields([{ name: 'mainImage', maxCount: 1 }, { name: 'sideImages', maxCount: 12 }]), addProducts)
@@ -61,5 +60,6 @@ router.post('/addCoupon',addCoupon)
 router.post('/editCoupon/:id',editCoupon) 
 router.post('/editOffer/:id',upload.single('image'),editOffer)
 router.post('/addOffer',upload.single('image'),addOffer)
+router.post('/search',search)
 
 export default router

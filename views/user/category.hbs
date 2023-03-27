@@ -28,7 +28,7 @@
 
 <body>
      
-      <!-- Navbar Start -->
+ <!-- Navbar Start -->
     <div class="container-fluid bg-dark mb-30">
         <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
@@ -58,7 +58,6 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/" class="nav-item nav-link active">Home</a>
                             <a href="/shop" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Account <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
@@ -94,7 +93,7 @@
         <div class="row px-xl-5">
             {{#each products}}
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a href="/addToCart/{{this._id}}">
+                <a href="/viewProduct?id={{this._id}}">
 
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">

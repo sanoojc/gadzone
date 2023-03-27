@@ -27,6 +27,9 @@ import mongoose from "mongoose"
     },
     acccountDetails:{
        type: Array 
+    },
+    wallet:{
+        type:Number
     }
  })
  const userModel=mongoose.model('user',userSchema)
