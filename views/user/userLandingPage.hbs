@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MultiShop - Online Shop Website Template</title>
+    <title>GadZone</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -13,7 +13,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -31,16 +31,19 @@
     <div class="container-fluid bg-dark mb-30">
         <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse"
+                    href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
                     <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
-                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
+                    id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
                         {{#each category}}
-                        <a  href="/showCategoryProd/{{this.categoryName}}" class="nav-item nav-link">{{this.categoryName}}</a>
+                        <a href="/showCategoryProd/{{this.categoryName}}"
+                            class="nav-item nav-link">{{this.categoryName}}</a>
                         {{/each}}
-                       
+
                     </div>
                 </nav>
             </div>
@@ -58,7 +61,8 @@
                             <a href="/" class="nav-item nav-link active">Home</a>
                             <a href="/shop" class="nav-item nav-link">Shop</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Account <i class="fa fa-angle-down mt-1"></i></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Account <i
+                                        class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
                                     <a href="/userProfile" class="dropdown-item">profile</a>
                                     <a href="/login" class="dropdown-item">Login</a>
@@ -70,11 +74,13 @@
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="/wishlist" class="btn px-0">
                                 <i class="fas fa-heart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                                <span class="badge text-secondary border border-secondary rounded-circle"
+                                    style="padding-bottom: 2px;">0</span>
                             </a>
                             <a href="/cart" class="btn px-0 ml-3">
                                 <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                                <span class="badge text-secondary border border-secondary rounded-circle"
+                                    style="padding-bottom: 2px;">0</span>
                             </a>
                         </div>
                     </div>
@@ -85,7 +91,7 @@
     <!-- Navbar End -->
 
 
-   <!-- Carousel Start -->
+    <!-- Carousel Start -->
     <div class="container-fluid mb-3">
         <div class="row px-xl-5">
             <div class="col-lg-12">
@@ -96,12 +102,14 @@
                         <li data-target="#header-carousel" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner">
-                   {{#each offers}}
+                        {{#each offers}}
                         <div class="carousel-item position-relative active" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="/uploads/{{this.image.filename}}" style="object-fit: cover;">
+                            <img class="position-absolute w-100 h-100" src="/uploads/{{this.image.filename}}"
+                                style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="{{this.url}}">Shop Now</a>
+                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                                        href="{{this.url}}">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +124,8 @@
 
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span
+                class="bg-secondary pr-3">Categories</span></h2>
         <div class="row px-xl-5 pb-3">
             {{#each category}}
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
@@ -131,28 +140,33 @@
                     </div>
                 </a>
             </div>
-           {{/each}}
+            {{/each}}
         </div>
     </div>
     <!-- Categories End -->
 
-       <!-- Products Start -->
+    <!-- Products Start -->
+
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured
+                Products</span></h2>
+       
         <div class="row px-xl-5">
+
             {{#each products}}
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <a href="/viewProduct?id={{this._id}}">
 
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid" src="/uploads/{{this.mainImage.filename}}" alt="">
-                        <div class="product-action">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="img-fluid" src="/uploads/{{this.mainImage.filename}}" alt="">
+                            <div class="product-action">
+                            </div>
                         </div>
-                    </div>
-                   
+
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="/viewProduct/{{this._id}}">{{this.productName}}</a>
+                            <a class="h6 text-decoration-none text-truncate"
+                                href="/viewProduct/{{this._id}}">{{this.productName}}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5>{{this.productPrice}}</h5>
                                 <h6 class="text-muted ml-2"><del>{{this.mrp}}</del></h6>
@@ -166,8 +180,8 @@
                                 <small>(99)</small>
                             </div>
                         </div>
-                
-                </div>
+
+                    </div>
                 </a>
             </div>
             {{/each}}
@@ -178,15 +192,15 @@
 
     <div class="col-lg-12">
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination" style="justify-content: center;">
-                            {{#each pagination}}
-                            <li class="page-item"><a class="page-link" href="/?page={{inc @index}}"
-                                    style="color: black;">{{inc @index}}</a></li>
-                            {{/each}}
-                </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" style="justify-content: center;">
+                {{#each pagination}}
+                <li class="page-item"><a class="page-link" href="/?page={{inc @index}}" style="color: black;">{{inc
+                        @index}}</a></li>
+                {{/each}}
+    </div>
 
-   <!-- Footer Start -->
+    <!-- Footer Start -->
     <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -195,13 +209,13 @@
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-                 <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
-                        <div class="d-flex">
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
+                <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
+                <div class="d-flex">
+                    <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+                </div>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">
@@ -210,7 +224,8 @@
                         <div class="d-flex flex-column justify-content-start">
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Payment</a>
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shipping</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Cancellation </a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Cancellation
+                            </a>
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Return</a>
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>FAQ's</a>
                             <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
@@ -219,27 +234,30 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">policy</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Return policy</a>
-                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Terms of use</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Return
+                                policy</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Terms of
+                                use</a>
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>security</a>
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Privacy</a>
                         </div>
-                    </div>    
+                    </div>
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick shop</h5>
                         <div class="d-flex flex-column justify-content-start">
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
                             <a class="text-secondary mb-2" href="/cart"><i class="fa fa-angle-right mr-2"></i>cart</a>
                             <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>whishlist</a>
-                            <a class="text-secondary mb-2" href="/orders"><i class="fa fa-angle-right mr-2"></i>orders</a>
+                            <a class="text-secondary mb-2" href="/orders"><i
+                                    class="fa fa-angle-right mr-2"></i>orders</a>
                         </div>
-                    </div>    
-                        </form>
-                       
                     </div>
+                    </form>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Footer End -->
 
@@ -249,4 +267,3 @@
 
 
     <!-- JavaScript Libraries -->
-    

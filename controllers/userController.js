@@ -131,7 +131,6 @@ export async function getHome(req, res) {
                  .limit(req.session.perpage)
                  .lean();
              });
-           //username = req.session.user;
            let pageCount = Math.ceil(docCount / req.session.perpage);
            let pagination = [];
            for (let i = 1; i <= pageCount; i++) {
@@ -390,13 +389,93 @@ export async function productCategory(req, res) {
 //shop
 export async function shopPage(req, res) {
     try{
-
-        const products = await productModel.find().lean()
-        res.render('user/shop', { products })
+        let search=req.query.search ?? ''
+        let sort=req.query.filter ?? ''
+        let category=req.query.category ?? ''
+        let page=Number(req.query.page ?? 0)
+        let categoryFilter=[];
+        let findConditions={}
+        if (category) {
+             findConditions = {
+                list: false,
+                category: { $in: category},
+                productName: new RegExp(search, "i"),
+              };
+          } else {
+            findConditions = {
+                list: false,
+                productName: new RegExp(search, "i"),
+              };
+            }
+            let categories = await categoryModel.find({list: false,}).lean();
+           
+        const products = await productModel.find(findConditions).sort({productPrice:sort}).skip(page*8).limit(8).lean()
+        
+        const productCount = await productModel.find({findConditions}).count().lean()
+        let pageCount = Math.ceil(productCount / 8);
+        let pagination = [];
+        for (let i = 1; i <= pageCount; i++) {
+            pagination.push(i);
+        }
+        console.log('pages',productCount);
+        page=productCount/8
+        res.render('user/shop', { products,categories,sort,category,search,pagination,page })
     }catch (err) {
         console.log(err)
     }
 }
+
+
+
+
+ 
+    // if (category) {
+    //   let [{ name }] = await categoryModel.find(
+    //     { _id: category,list:true},
+    //     { name: 1, _id: 0 }
+    //   );
+    //    categoryName = name;
+    // }
+    
+    // console.log(categoryFilter, "category");
+    // let categoryArray = categoryFilter.map((category) => category._id);
+  
+    // const findConditions = {
+    //   list: true,
+    //   category: { $in: categoryArray },
+    //   title: new RegExp(search, "i"),
+    // };
+    // const productData = await productModel
+    //   .find(findConditions)
+    //   .sort(sort == "0" ? { uploadedAt: 1 } : { price: sort })
+    //   .skip(page * 9)
+    //   .limit(9)
+    //   .lean();
+    // const productCount = await productModel.find(findConditions).lean().count();
+    // console.log(sort,'sort');
+    // let categoryData = await categoryModel.find({ list: true }).lean();
+    // let pageCount = Math.ceil(productCount / 9);
+    // let pagesCount = [];
+    // for (let i = 0; i < pageCount; i++) {
+    // pagesCount.push(i);
+    // }
+    // res.render("user/shopnew", {
+    //   // user,
+    //   productData,
+    //   categoryData,
+    //   categoryName,
+    //   category,
+    //   search,
+    //   sort,
+    //   page,
+    //   pagesCount,
+    //   isLoggedIn,
+    // });
+
+
+
+
+
 
 export async function orderPlaced(req, res) {
     try{
