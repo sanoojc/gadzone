@@ -35,7 +35,6 @@
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
       <a href="/admin/" class="logo d-flex align-items-center">
         <img src="/assets/img/logo.png" alt="">
@@ -43,61 +42,49 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
         <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle " href="#">
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
         <li class="nav-item dropdown pe-3">
           <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Account
             <div class="dropdown-menu bg-white rounded-0 border-0 m-0">
               <a href="/admin/logout" class="dropdown-item">Logout</a>
             </div>
-          </div>
-         
+          </div> 
     </nav><!-- End Icons Navigation -->
-
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
         <a class="nav-link collapsed active" href="/admin/">
           <i class="bi bi-grid"></i>
           <span>Home</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed " href="/admin/products">
           <i class="bi bi-grid"></i>
           <span>Products</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
            <li class="nav-item">
         <a class="nav-link collapsed " href="/admin/showCategories">
           <i class="bi bi-grid"></i>
           <span>Categories</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed " href="/admin/users">
           <i class="bi bi-grid"></i>
@@ -116,7 +103,6 @@
           <span>Orders</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="/admin/getOfferPage">
@@ -124,8 +110,6 @@
           <span>Banner</span>
         </a>
       </li><!-- End Error 404 Page Nav -->
-
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="/admin/salesReport">
           <i class="bi bi-grid"></i>
@@ -133,14 +117,11 @@
         </a>
       </li><!-- End Error 404 Page Nav -->
     </ul>
-
   </aside><!-- End Sidebar-->
-
   <main id="main" class="main">
-
     <section class="section dashboard">
       <div class="d-flex justify-content-between p-5">
-          <h5>COUPONS</h5>
+          <h5>ORDERS</h5>
       </div>
       <div class="row">
         <!-- Default Table -->
@@ -156,13 +137,9 @@
               <th scope="col">Payment</th>
               <th scope="col">Status</th>
               <th scope="col">Manage</th>
-
-
             </tr>
           </thead>
           <tbody>
-
-
             {{#each orders}}
             <tr>
               <td>{{inc @index}}</td>
@@ -173,16 +150,8 @@
               <td>{{this.quantity}}</td>
               <td>{{this.product.productPrice}}</td>
               <td>{{this.paymentType}}</td>
-
-
-
-
-
-
-
               <td> 
                 <span class="status-badge {{this.orderStatus}}">
-
                 {{this.orderStatus}}
                 </span>
               </td>
@@ -217,15 +186,11 @@
           </tbody>
         </table>
         <!-- End Default Table Example -->
-
       </div>
     </section>
-
-
   </main><!-- End #main -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
-
   <!-- Vendor JS Files -->
   <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
