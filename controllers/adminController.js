@@ -6,6 +6,7 @@ import offerModel from '../models/offerModel.js'
 import couponModel from '../models/couponModel.js'
 import orderModel from '../models/orderModel.js'
 import sharp from 'sharp'
+import e from 'express'
 
 export async function getAdminLogin(req, res) {
     try {
@@ -130,9 +131,9 @@ export async function displayProducts(req, res) {
 export async function getAddProduct(req, res) {
     try {
 
-        const category = await categoryModel.find().lean()
+        const categories = await categoryModel.find().lean()
         console.log(category.categoryName);
-        res.render('admin/addProduct', { category })
+        res.render('admin/addProduct', { categories })
     } catch (err) {
         console.log(err); 
     }
@@ -253,45 +254,51 @@ export async function salesReport(req, res) {
 export async function addProducts(req, res) {
     try {
         const { productName, productPrice, category, mrp, description, quantity } = req.body;
+        // const categories=await categoryModel.find({list:false}).lean()
         if (productName == '' || productPrice == '' || category == '' || mrp == '' || description == '' || quantity == '') {
             return res.render('admin/addProduct', { error: true, message: 'please fill all the fields' })
+
         } else {
             if (req.files?.mainImage && req.files?.sideImages) {
-                if (mrp >= productPrice) {
-                    const mainImage = req.files.mainImage[0];
-                    const sideImages = req.files.sideImages;
-                    await sharp(mainImage.path) // read the image file
-                    .png() // convert to PNG format
-                    .resize(300, 300, { // resize to 300x300 with nearest neighbor interpolation
-                        kernel: sharp.kernel.nearest,
-                        fit: 'contain',
-                        position: 'center',
-                        background: { r: 255, g: 255, b: 255, alpha: 0 }
-                    })
-                    .toFile(mainImage.path + ".png"); // save the resized image as PNG
-                mainImage.filename = mainImage.filename + ".png"; // update the filename with the new extension
-                mainImage.path = mainImage.path + ".png"; // update the path with the new extension
-                    const product = new productModel({
-                        productName,
-                        productPrice,
-                        category,
-                        mrp,
-                        description,
-                        quantity,
-                        mainImage,
-                        sideImages,
-                    });
-                    await product.save();
-                    res.redirect('/admin/products');
+                if (mrp >= productPrice &&mrp>0) {
+                    if(quantity>0){
+                        const mainImage = req.files.mainImage[0];
+                        const sideImages = req.files.sideImages;
+                        await sharp(mainImage.path) // read the image file
+                        .png() // convert to PNG format
+                        .resize(300, 300, { // resize to 300x300 with nearest neighbor interpolation
+                            kernel: sharp.kernel.nearest,
+                            fit: 'contain',
+                            position: 'center',
+                            background: { r: 255, g: 255, b: 255, alpha: 0 }
+                        })
+                        .toFile(mainImage.path + ".png"); // save the resized image as PNG
+                        mainImage.filename = mainImage.filename + ".png"; // update the filename with the new extension
+                        mainImage.path = mainImage.path + ".png"; // update the path with the new extension
+                        const product = new productModel({
+                            productName,
+                            productPrice,
+                            category,
+                            mrp,
+                            description,
+                            quantity,
+                            mainImage,
+                            sideImages,
+                        });
+                        await product.save();
+                        res.redirect('/admin/products');
+                    }else{
+                        return res.render('admin/addProduct',{ error: true, message: 'quantity must be greater than zero' })
+                    }
                 } else {
-                    return res.render('admin/products', { error: true, message: 'price must be lower than mrp' })
+                    return res.render('admin/addProduct',{ error: true, message: 'price must be lower than mrp' })
                 }
             } else {
-                return res.render('admin/products', { error: true, message: 'please add the images' })
+                return res.render('admin/addProduct',{ error: true, message: 'please add the images' })
             }
         }
     } catch (err) {
-        console.log(err);
+        console.log('error',err);
     }
 }
 export async function getEditProduct(req, res) {
@@ -306,62 +313,87 @@ export async function editProduct(req, res) {
     try {
         const _id = req.params.id
         const { productName, productPrice, category, description, quantity, mrp } = req.body
-        if (req.files?.mainImage && req.files?.sideImages) {
-            await productModel.updateOne({ _id: _id }, {
-                $set: {
-                    productName: productName,
-                    productPrice: productPrice,
-                    mrp: mrp,
-                    category: category,
-                    description: description,
-                    quantity: quantity,
-                    mainImage: req.files.mainImage[0],
-                    sideImages: req.files.sideImages
+        if (productName == '' || productPrice == '' || category == '' || mrp == '' || description == '' || quantity == ''){
+            return res.render('admin/editProduct', { error: true, message: 'please fill all the fields' })
+        }else{
+            if (mrp>0){
+                if(mrp>=productPrice){
+                    if(quantity>0){
+
+                        if (req.files?.mainImage && req.files?.sideImages) {
+                            await productModel.updateOne({ _id: _id }, {
+                                $set: {
+                                    productName: productName,
+                                    productPrice: productPrice,
+                                    mrp: mrp,
+                                    category: category,
+                                    description: description,
+                                    quantity: quantity,
+                                    mainImage: req.files.mainImage[0],
+                                    sideImages: req.files.sideImages
+                                }
+                            })
+                            res.redirect('/admin/products')
+                        }
+                        if (!req.files?.mainImage && req.files.sideImages) {
+                            await productModel.updateOne({ _id: _id }, {
+                                $set: {
+                                    productName: productName,
+                                    productPrice: productPrice,
+                                    mrp: mrp,
+                                    category: category,
+                                    description: description,
+                                    quantity: quantity,
+                                    sideImages: req.files.sideImages
+                                }
+                            })
+                            res.redirect('/admin/products')
+                        }
+                        if (req.files?.mainImage && !req.files.sideImages) {
+                            await productModel.updateOne({ _id: _id }, {
+                                $set: {
+                                    productName: productName,
+                                    productPrice: productPrice,
+                                    mrp: mrp,
+                                    category: category,
+                                    description: description,
+                                    quantity: quantity,
+                                    mainImage: req.files.mainImage[0]
+                                }
+                            })
+                            res.redirect('/admin/products')
+                        }
+                        if (!req.files?.mainImage && !req.files.sideImages) {
+                            await productModel.updateOne({ _id: _id }, {
+                                $set: {
+                                    productName: productName,
+                                    productPrice: productPrice,
+                                    mrp: mrp,
+                                    category: category,
+                                    description: description,
+                                    quantity: quantity,
+                                }
+                            })
+                            res.redirect('/admin/products')
+                        }
+
+                    }else{
+                        return res.render('admin/editProduct', { error: true, message: 'quantity must be greater than zero' })
+
+                    }
+
+                }else{
+                    return res.render('admin/editProduct', { error: true, message: 'mrp must be greater than offer price' })
+
                 }
-            })
-            res.redirect('/admin/products')
+
+            }else{
+                return res.render('admin/editProduct', { error: true, message: 'mrp must be greater than zero' })
+ 
+            }
         }
-        if (!req.files?.mainImage && req.files.sideImages) {
-            await productModel.updateOne({ _id: _id }, {
-                $set: {
-                    productName: productName,
-                    productPrice: productPrice,
-                    mrp: mrp,
-                    category: category,
-                    description: description,
-                    quantity: quantity,
-                    sideImages: req.files.sideImages
-                }
-            })
-            res.redirect('/admin/products')
-        }
-        if (req.files?.mainImage && !req.files.sideImages) {
-            await productModel.updateOne({ _id: _id }, {
-                $set: {
-                    productName: productName,
-                    productPrice: productPrice,
-                    mrp: mrp,
-                    category: category,
-                    description: description,
-                    quantity: quantity,
-                    mainImage: req.files.mainImage[0]
-                }
-            })
-            res.redirect('/admin/products')
-        }
-        if (!req.files?.mainImage && !req.files.sideImages) {
-            await productModel.updateOne({ _id: _id }, {
-                $set: {
-                    productName: productName,
-                    productPrice: productPrice,
-                    mrp: mrp,
-                    category: category,
-                    description: description,
-                    quantity: quantity,
-                }
-            })
-            res.redirect('/admin/products')
-        }
+
+       
     } catch (err) {
         console.log(err);
     }
@@ -652,7 +684,6 @@ export async function updateOrder(req, res) {
     }
 }
 export async function search(req, res) {
-
     try {
         const product = await productModel.find({ productName: new RegExp(req.body.key, "i") }).lean()
         res.redirect('/admin/products')
