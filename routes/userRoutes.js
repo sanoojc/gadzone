@@ -1,6 +1,6 @@
 import express  from 'express'
 import verifyLogin from '../middleware/verifyLogin.js'
-import { userSignup,userLogin, addAdress, addToCart, addToWishlist, getWishlist, getCart, getHome, userProfile, editProfile, removeFromWhishlist, showWhishlist, removeFromCart, checkout, loginPage, signupPage, logout, resetPassword, enterOtp, resetPass, addCartQuantity, minusCartQuantity, viewProduct, orderPlaced, postCheckout, editAddress, myOrders, getUserPayment, shopPage, getAddAddress, getEditAddress, deleteAddress, viewOrder, productCategory, cancelOrder, applyCoupon, getResetPassword, getSetPassword, getEnterOtp} from '../controllers/userController.js'
+import { userSignup,userLogin, addAdress, addToCart, addToWishlist, getWishlist, getCart, getHome, userProfile, editProfile, removeFromWhishlist, showWhishlist, removeFromCart, checkout, loginPage, signupPage, logout, resetPassword, enterOtp, resetPass, addCartQuantity, minusCartQuantity, viewProduct, orderPlaced, postCheckout, editAddress, myOrders, getUserPayment, shopPage, getAddAddress, getEditAddress, deleteAddress, viewOrder, productCategory, cancelOrder, applyCoupon, getResetPassword, getSetPassword, getEnterOtp, returnOrder} from '../controllers/userController.js'
 // import userModel from '../models/userModel.js'
 const router=express.Router()
 
@@ -11,9 +11,10 @@ router.get('/enterOtp',getEnterOtp)
 router.get('/signup',signupPage)
 // router.get('/checkout',getCheckout)
 router.get('/viewProduct',viewProduct)
-router.get('/cart',verifyLogin, getCart)
 router.get('/login',loginPage)
 router.get('/forgotPassword',resetPassword)
+
+router.get('/cart',verifyLogin, getCart)
 router.get('/checkout',verifyLogin,checkout)
 router.get('/wishlist',verifyLogin, getWishlist)
 router.get('/addCartQuantity/:id',addCartQuantity)
@@ -37,6 +38,7 @@ router.get('/cancelOrder/:id',cancelOrder)
 router.get ('/applyCoupon/:coupon/:purchaseAmount',applyCoupon)
 router.get('/resetPassword',getResetPassword)
 router.get('/setPassword',getSetPassword)
+router.get('/return/:id',returnOrder)
 
 
 router.post('/login',userLogin)

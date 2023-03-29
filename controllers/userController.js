@@ -813,6 +813,28 @@ export async function cancelOrder(req, res) {
         console.log(err)
     }
 }
+export async function returnOrder (req, res) {
+    try{
+        const _id = req.params.id
+        const order = await orderModel.findOne({ _id })
+
+        if (order.orderStatus = 'delivered') {
+            await orderModel.findByIdAndUpdate(_id, {
+                $set: {
+                    orderStatus: 'returned'
+                }
+            })
+            
+            const proId=order.product._id
+            await productModel.updateOne({_id:proId},{$inc:{quantity:order.quantity}})
+            res.redirect('/orders')
+        } else {
+            res.redirect('/orders')
+        }
+    }catch (err) {
+        console.log(err)
+    }
+}
 
 export async function logout(req, res) {
     try{

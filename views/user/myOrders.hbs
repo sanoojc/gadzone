@@ -94,24 +94,34 @@
                     <img class="img-fluid" style="width:150px; height: 150px; object-fit: contain;" src="/uploads/{{this.product.mainImage.filename}}" alt="">
                 </div>
                 <div class="ms-4 py-4 d-flex align-items-center flex-column"style="width:210px; height: 210px; object-fit: contain;">
-                    <a class="h6 text-decoration-none text-truncate" href="/viewProduct?id={{this._id}}">
+                    <a class="h6 text-decoration-none text-truncate" href="/viewOrder/{{this._id}}">
                         <h6> product : {{this.product.productName}}</h6>
                         <h6>price : {{this.product.productPrice}}</h6>
                         <h6>quantity : {{this.quantity}}</h6>
                         <h6>total : {{this.total}}</h6>
                     </a>
                 </div>
-                <div class="">
+                <div class="d-flex">
                 <div class="me-5">
                     <a class="btn btn-block btn-success font-weight-bold my-3 py-3 ms-5 "
                         href="/viewOrder/{{this._id}}">view</a>
                 </div>
+                 {{#ifEquals this.orderStatus 'returned'}}
+                <div class="">
+                 <a class="btn btn-block  border font-weight-bold my-3 py-3 ms-5" href="/viewOrder/{{this._id}}">Returned</a>
+                </div>
+                {{/ifEquals}}
                 {{#ifEquals this.orderStatus 'delivered'}}
-                
+                <div class="">
+                 <a onclick="return confirm('are you sure want to return this product')" class="btn btn-block btn-primary border font-weight-bold my-3 py-3 ms-5" href="/return/{{this._id}}">Return</a>
+                </div>
+                {{else}}
+                {{#ifEquals this.orderStatus 'returned'}}
                 {{else}}
                 <div class="">
-                    <a onclick="return confirm('are you sure want to cancel this order')" class="btn btn-block btn-danger font-weight-bold my-3 py-3 ms-5" href="/cancelOrder/{{this._id}}">cancel order</a>
+                    <a onclick="return confirm('are you sure want to cancel this order')" class="btn btn-block btn-danger border font-weight-bold my-3 py-3 ms-5" href="/cancelOrder/{{this._id}}">cancel order</a>
                 </div>
+                {{/ifEquals}}
                 {{/ifEquals}}
                 </div>
             </a>

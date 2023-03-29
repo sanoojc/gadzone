@@ -98,28 +98,55 @@
                     </div>
 
                     <div class="col-lg-7 h-auto mb-30 mt-5 ps-5">
-                        <div class="h-100 bg-light p-30">
-                            <h6>Order ID : {{order._id}}</h6>
-                            <h6>Product name : {{order.product.productName}}</h6>
-                            <h6>Category : {{order.product.category}}</h6>
-                            <h6>Payment type : {{order.paymentType}}</h6>
-                            <h6>Payment status : {{order.paymentStatus}}</h6>
-                            <h6>Quantity : {{order.quantity}}</h6>
-                            <h6>Product price : {{order.total}}</h6>
-                            <h6>Address : {{order.address.name}},
-                                {{order.address.city}},
-                                {{order.address.adress}},
-                                {{order.address.state}},
-                                {{order.address.mobile}}
-                                <h6>pin : {{order.address.pin}}</h6>
-                            </h6>
-                            <h6>order status : {{order.orderStatus}}</h6>
-                            <div class="d-flex align-items-center mb-4 pt-2">
-                                <button class="btn btn-primary  px-3 "
-                                    onclick="location.href='/orders'"> Back</button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="h-100 bg-light p-30">
+
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>order ID</td>
+                    <td>{{order._id}}</td>
+                  </tr>
+                  <tr>
+                    <td>product name</td>
+                    <td>{{order.product.productName}}</td>
+                  </tr>
+                  <tr>
+                    <td>category</td>
+                    <td>{{order.product.category}}</td>
+                  </tr>
+
+                  <td>payment type</td>
+                  <td>{{order.paymentType}}</td>
+                  </tr>
+                  <tr>
+                    <td>payment status</td>
+                    <td>{{order.paymentStatus}}</td>
+                  </tr>
+                  <tr>
+                    <td>Quantity</td>
+                    <td>{{order.quantity}}</td>
+                  </tr>
+                  <tr>
+                    <td>ph</td>
+                    <td>{{order.address.mobile}}</td>
+                  </tr>
+                  <tr>
+                    <td>address</td>
+                    <td>
+                      {{order.address.name}},{{order.address.adress}},{{order.address.city}},{{order.address.state}},{{order.address.pin}},ph:{{order.address.mobile}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>order status</td>
+                    <td>{{order.orderStatus}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+              <div class="d-flex align-items-center mb-4 pt-2">
+                <button class="btn btn-primary  px-3 " onclick="location.href='/admin/orders'"> Back</button>
+              </div>
+            </div>
                 </div>
             </div>
             <!-- Shop Detail End -->
