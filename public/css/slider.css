@@ -4,20 +4,19 @@
     box-sizing: border-box
   }
   
-  .show {
+  .zshow {
     width: 400px;
     height: 400px;
   }
   
-  .small-img {
+  .zsmall-img {
     width: 350px;
     height: 70px;
     margin-top: 10px;
     position: relative;
-    left: 25px;
   }
   
-  .small-img .icon-left, .small-img .icon-right {
+  .zsmall-img .icon-left, .zsmall-img .icon-right {
     width: 12px;
     height: 24px;
     cursor: pointer;
@@ -27,13 +26,13 @@
     margin: auto 0;
   }
   
-  .small-img .icon-left { transform: rotate(180deg) }
+  .zsmall-img .icon-left { transform: rotate(180deg) }
   
-  .small-img .icon-right { right: 0; }
+  .zsmall-img .icon-right { right: 0; }
   
-  .small-img .icon-left:hover, .small-img .icon-right:hover { opacity: .5; }
+  .zsmall-img .icon-left:hover, .zsmall-img .icon-right:hover { opacity: .5; }
   
-  .small-container {
+  .zsmall-container {
     width: 310px;
     height: 70px;
     overflow: hidden;
@@ -43,12 +42,12 @@
     margin: 0 auto;
   }
   
-  .small-container div {
+  .zsmall-container div {
     width: 800%;
     position: relative;
   }
   
-  .small-container .show-small-img {
+  .zsmall-container .zshow-small-img {
     width: 70px;
     height: 70px;
     margin-right: 6px;
@@ -56,9 +55,9 @@
     float: left;
   }
   
-  .small-container .show-small-img:last-of-type { margin-right: 0; }
+  .zsmall-container .zshow-small-img:last-of-type { margin-right: 0; }
   
 
-  .show div{
+  .zshow div{
     z-index: 150 !important;
   }

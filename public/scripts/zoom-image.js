@@ -11,8 +11,8 @@
          * 默认参数
          */
         var defaultParas = {
-            layerW: 100, // 遮罩宽度
-            layerH: 100, // 遮罩高度
+            layerW: 200, // 遮罩宽度
+            layerH: 200, // 遮罩高度
             layerOpacity: 0.2, // 遮罩透明度
             layerBgc: '#000', // 遮罩背景颜色
             showPanelW: 500, // 显示放大区域宽

@@ -58,19 +58,19 @@
 <!-- Shop Detail Start -->
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
-        <div class="col-lg-5 mb-30 d-flex justify-content-center flex-column">
-            <div class="show" href="/uploads/{{product.mainImage.filename}}">
+        <div class="col-lg-5 mb-30 d-flex justify-content-center flex-column align-items-center">
+            <div class="zshow" href="/uploads/{{product.mainImage.filename}}">
                 <img src="/uploads/{{product.mainImage.filename}}" id="show-img" style="object-fit:contain">
             </div>
 
             <!-- Secondary carousel image thumbnail gallery -->
 
-            <div class="small-img">
+            <div class="zsmall-img">
                 <img src="/img/next-icon.png" class="icon-left" alt="" id="prev-img">
-                <div class="small-container">
-                    <div id="small-img-roll">
+                <div class="zsmall-container">
+                    <div id="zsmall-img-roll">
                         {{#each product.sideImages}}
-                        <img src="/uploads/{{this.filename}}" class="show-small-img" style="object-fit:contain">
+                        <img src="/uploads/{{this.filename}}" class="zshow-small-img" style="object-fit:contain">
                         {{/each}}
                     </div>
                 </div>

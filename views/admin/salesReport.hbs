@@ -251,12 +251,21 @@
                   type="date" name="endDate">
                 <button type="submit" class="btn btn-sm btn-warning rounded mt-4">Filter</button>
               </form>
+
+           
             </div>
-              <div class=" mt-4 ms-5 mb-4">
+              <div class=" mt-4 ms-5 mb-5 d-flex justify-content-between">
+                <div class="">
               <a href="/admin/salesReport?filter=thisMonth" class="btn btn-sm border btn-light" type="button"> This Month </a>
               <a href="/admin/salesReport?filter=lastMonth" class="btn btn-sm border btn-light" type="button"> Last Month </a>
               <a href="/admin/salesReport?filter=thisYear" class="btn btn-sm border btn-light" type="button"> This Year </a>
               <a href="/admin/salesReport?filter=lastYear" class="btn btn-sm border btn-light" type="button"> Last Year </a>
+                </div>
+                    <div class="d-flex justify-content-end" style="margin-right: 5rem;">
+                <button onclick=" downloadPdf()" class="btn btn-sm btn-warning rounded" style="height:30px">Download as PDF</button>
+                <button onclick=" downloadExcel()" class="ms-3 btn btn-sm btn-warning rounded" style="height:30px">Download as
+                    Excel</button>
+            </div>
             </div>
 
               <!-- Table with hoverable rows -->
@@ -321,6 +330,60 @@
 
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
+
+
+    <script>
+        let orders = []
+        {{#each deliveredOrders }}
+        orders.push(['{{this.address.name}}', '{{this.product.productName}}', '{{this.dispatch}}', '{{this.quantity}}', '{{this.total}}'
+            , '{{this.orderStatus}}'])
+        {{/each}}
+                let totalRevenue = '{{salesSum}}'
+                let totalOrders = '{{salesCount}}'
+                let Customers = '{{userCount}}'
+                const { jsPDF } = window.jspdf;
+                function downloadPdf() {
+                    const doc = new jsPDF();
+                    doc.text(15, 20, "GadZone Sales Report");
+                    doc.autoTable({
+                        head: [['Type', 'Details']],
+                        body: [
+                            ['Total Sales', totalOrders],
+                            ['Total Revenue', totalRevenue],
+                            ['Total Customers', Customers],
+                        ],
+                        startY: 40
+                    })
+                    doc.text(15, doc.lastAutoTable.finalY + 20, "order info");
+                    doc.autoTable({
+                        head: [['UserName', 'ProductName', 'dispatch', 'quantity', 'total', "orderStatus"]],
+                        body: orders,
+                        startY: doc.lastAutoTable.finalY + 30
+                    })
+                    doc.save('sales-report.pdf');
+                }
+                function downloadExcel() {
+                    let report = [
+                        { type: "Total Sales", value: totalOrders },
+                        { type: "Total Revenue", value: totalRevenue },
+                        { type: "Total Customers", value: Customers },
+                    ]
+
+                    var sheet1 = XLSX.utils.json_to_sheet(report);
+                    var wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, sheet1, "Sales Report");
+
+
+                    XLSX.writeFile(wb, 'sales-report.xlsx');
+                }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

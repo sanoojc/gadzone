@@ -148,36 +148,33 @@
                            <input type="text" class="form-control" name="name" value="{{coupon.name}}">
                         </div>
                     </div>
-                   
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label">Code :</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="code" value="{{coupon.code}}">
                         </div>
                     </div>
-                   
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label">Min Amount :</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="minAmount" value="{{coupon.minAmount}}">
                         </div>
                     </div>
-                   
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label">cashBack :</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="cashback" value="{{coupon.cashback}}">
+                            <input id="date" type="number" class="form-control" min="100" name="cashback" value="{{coupon.cashback}}">
                         </div>
                     </div>
-                   
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label">Expiry :</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" name="expiry" value="{{cooupon.expiry}}">
+                            <input type="date" class="form-control" name="expiry" value="{{expiry}}" >
                         </div>
                     </div>
-                   
-                   
+                    {{#if error}}
+                    <div class="text-center "><h5 class="text-danger">{{message}}</h5></div>
+                    {{/if}}
                     <div class="row mb-3 d-flex justify-content-center ">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
@@ -205,6 +202,10 @@
 
     <!-- Template Main JS File -->
     <script src="/assets/js/main.js"></script>
+    <script>
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("date").setAttribute("min", today);
+      </script>
 </body>
 
 </html>

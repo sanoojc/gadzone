@@ -515,18 +515,18 @@ export async function postCheckout(req, res) {
 
 
         if (payment == 'online') {
-            // for (let item of products) {
-            //     orders.push({
-            //         product: item,
-            //         paymentType: payment,
-            //         paymentStatus: 'paid',
-            //         userId: req.session.user.id,
-            //         quantity: cartQuantity[item.id],
-            //         total:totalAmount,
-            //         address
-            //     })
-            // }
-            // req.session.orders = orders
+            for (let item of products) {
+                orders.push({
+                    product: item,
+                    paymentType: payment,
+                    paymentStatus: 'paid',
+                    userId: req.session.user.id,
+                    quantity: cartQuantity[item.id],
+                    total:totalAmount,
+                    address
+                })
+            }
+            req.session.orders = orders
             let orderId = "order_" + createId();
             const options = {
                 method: "POST",

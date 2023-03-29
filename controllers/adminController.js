@@ -60,7 +60,7 @@ export async function getAdminHome(req, res) {
             console.log(monthlyData);
             const orders = order.length
             const users = user.length
-            return res.render('admin/home', { users, orders, revenue, deliveredOrders, pendingOrders, cancelledOrders, shippedOrders, monthlyData })
+            return res.render('admin/home', {users,orders,revenue,deliveredOrders,pendingOrders,cancelledOrders,shippedOrders,monthlyData})
         }
         else {
             res.redirect('/admin/login')
@@ -182,8 +182,8 @@ export async function salesReport(req, res) {
             default:
                 if (!req.query.filter && !req.query.startDate) filter = "lastWeek";
         }
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(24, 0, 0, 0);
+        startDate.setHours(0, 0, 0, 0)
+        endDate.setHours(24, 0, 0, 0)
         let salesCount = 0;
         let deliveredOrders
         let salesSum = 0
@@ -203,45 +203,49 @@ export async function salesReport(req, res) {
             query.dispatch = { $gte: startDate, $lte: endDate };
             const orders = await orderModel.find(query).sort({ date: -1 }).lean();
             salesCount = orders.length;
-
             deliveredOrders = orders.filter(item => item.orderStatus === "delivered");
-            salesSum = deliveredOrders.reduce((acc, order) => acc + order.totalPrice, 0);
+            deliveredOrders.forEach((item) =>{
+                salesSum = item.total+salesSum
+                console.log(item)
+            });
+            console.log(salesSum);
         }
         else {
-            deliveredOrders = await orderModel.find({ 'orderItems.status': "Delivered" }).populate("orderItems").lean();
+            console.log("else case");
+            deliveredOrders = await orderModel.find({ orderStatus: "delivered" }).lean();
+         
             deliveredOrders = deliveredOrders.map((order) => {
                 order.date = new Date(order.date).toLocaleString();
                 return order;
             });
-            salesCount = await orderModel.countDocuments({ 'orderItems.status': 'Delivered' });
-
-            result = await orderModel.aggregate([
+            salesCount=await orderModel.countDocuments({ 'orderStatus': 'delivered' });
+            result=await orderModel.aggregate([
                 {
-                    $match: { 'orderItems.status': 'Delivered' }
+                    $match: { 'orderStatus': 'delivered' }
                 },
                 {
-                    $unwind: "$orderItems" // unwind the orderItems array
+                    $unwind: "$orderStatus"
                 },
                 {
-                    $match: { 'orderItems.status': 'Delivered' }
+                    $match: { 'orderStatus': 'delivered' }
                 },
                 {
-                    $group: { _id: null, totalPrice: { $sum: '$orderItems.price' } }
+                    $group: { _id: null, totalPrice: { $sum: '$total' } }
                 }
             ]);
-            salesSum = result[0]?.totalPrice
-            console.log("salessum", deliveredOrders);
+            salesSum = result[0]?.totalPrice ?? 0
+            
         }
-        const users = await orderModel.distinct('user')
+        const users = await orderModel.distinct('address.name')
         const userCount = users.length
-        console.log(deliveredOrders, 'sdfghj');
+       
         for (const i of deliveredOrders) {
             i.dispatch = new Date(i.dispatch).toLocaleDateString()
         }
+        console.log(salesSum)
         res.render("admin/salesReport", { userCount, salesCount, salesSum, deliveredOrders })
-
     } catch (error) {
-        console.log(error);
+        console.log(error)
         res.status(404)
         throw new Error("cant get")
     }
@@ -249,9 +253,6 @@ export async function salesReport(req, res) {
 export async function addProducts(req, res) {
     try {
         const { productName, productPrice, category, mrp, description, quantity } = req.body;
-     
-       
-
         if (productName == '' || productPrice == '' || category == '' || mrp == '' || description == '' || quantity == '') {
             return res.render('admin/addProduct', { error: true, message: 'please fill all the fields' })
         } else {
@@ -270,7 +271,6 @@ export async function addProducts(req, res) {
                     .toFile(mainImage.path + ".png"); // save the resized image as PNG
                 mainImage.filename = mainImage.filename + ".png"; // update the filename with the new extension
                 mainImage.path = mainImage.path + ".png"; // update the path with the new extension
-        
                     const product = new productModel({
                         productName,
                         productPrice,
@@ -289,9 +289,7 @@ export async function addProducts(req, res) {
             } else {
                 return res.render('admin/products', { error: true, message: 'please add the images' })
             }
-
         }
-     
     } catch (err) {
         console.log(err);
     }
@@ -461,17 +459,28 @@ export async function addCoupon(req, res) {
     try {
         const { name, code, minAmount, cashback, expiry } = req.body
         if (name == "" || code == "" || minAmount == "" || cashback == "" || expiry == "") {
-            res.redirect('/admin/addCoupon')
+          return  res.render('admin/addCoupon',{error:true, message:'enter all fields'})
         } else {
-            const coupon = await new couponModel({ name, code, minAmount, cashback, expiry })
-            coupon.save((err, data) => {
-                if (err) {
-                    console.log(err)
+            const cpn=await couponModel.findOne({name})
+            if(cpn){
+                return res.render('admin/addCoupon',{error:true, message:'coupon already exists'})
+            }else{
+                if(cashback>minAmount){
+                    return res.render('admin/addCoupon',{error:true,message:'cashback must be lower than Amount'})
+                }else{
+
+                    const coupon = await new couponModel({ name, code, minAmount, cashback, expiry })
+                    coupon.save((err, data) => {
+                        if (err) {
+                            console.log(err)
+                        }
+                        else {
+                            res.redirect('/admin/showCoupon')
+                        }
+                    })
                 }
-                else {
-                    res.redirect('/admin/showCoupon')
-                }
-            })
+
+            }
         }
     } catch (err) {
         console.log(err);
@@ -491,7 +500,8 @@ export async function showCoupon(req, res) {
 export async function getEditCoupon(req, res) {
     try {
         const coupon = await couponModel.findOne({ _id: req.params.id }).lean()
-        res.render('admin/editCoupon', { coupon })
+        const expiry = coupon.expiry.toISOString().slice(0,10); //formatting expir date YYYY-MM-DD
+        res.render('admin/editCoupon', { coupon,expiry })
     } catch (err) {
         console.log(err);
     }
@@ -501,7 +511,7 @@ export async function editCoupon(req, res) {
         const _id = req.params.id
         const { name, code, minAmount, cashback, expiry } = req.body
         if (name == "" || code == "" || minAmount == "" || cashback == "" || expiry == "") {
-            res.json({ error: true, message: "enter all fields" })
+            res.render('admin/editCoupon',{ error: true, message: "enter all fields" })
         }
         else {
             await couponModel.updateOne({ _id }, {
@@ -642,6 +652,7 @@ export async function updateOrder(req, res) {
     }
 }
 export async function search(req, res) {
+
     try {
         const product = await productModel.find({ productName: new RegExp(req.body.key, "i") }).lean()
         res.redirect('/admin/products')
