@@ -395,11 +395,15 @@ export async function shopPage(req, res) {
         let page=Number(req.query.page ?? 0)
         let categoryFilter=[];
         let findConditions={}
+        req.session.pageNum = parseInt(req.query.page ?? 1);
+        req.session.perpage = 6; 
+        let docCount;
+        console.log(category,sort,search,'dfghjk');
         if (category) {
              findConditions = {
                 list: false,
                 category: { $in: category},
-                productName: new RegExp(search, "i"),
+                productName: new RegExp(search,"i"),
               };
           } else {
             findConditions = {
@@ -407,19 +411,24 @@ export async function shopPage(req, res) {
                 productName: new RegExp(search, "i"),
               };
             }
+            console.log(await productModel.find(findConditions).lean(),'productsssssss');
             let categories = await categoryModel.find({list: false,}).lean();
-           
-        const products = await productModel.find(findConditions).sort({productPrice:sort}).skip(page*8).limit(8).lean()
-        
-        const productCount = await productModel.find({findConditions}).count().lean()
-        let pageCount = Math.ceil(productCount / 8);
+        const products = await productModel.find(findConditions).countDocuments()
+        .then((documentCount) => {
+             docCount = documentCount;
+              return productModel
+                .find(findConditions)
+                .sort({productPrice:sort})
+                .skip((req.session.pageNum - 1) * req.session.perpage)
+                .limit(req.session.perpage)
+                .lean();
+            });
+        let pageCount = Math.ceil(docCount/req.session.perpage);
         let pagination = [];
         for (let i = 1; i <= pageCount; i++) {
             pagination.push(i);
         }
-        console.log('pages',productCount);
-        page=productCount/8
-        res.render('user/shop', { products,categories,sort,category,search,pagination,page })
+        res.render('user/shop', { products,categories,sort,category,search,pagination })
     }catch (err) {
         console.log(err)
     }
