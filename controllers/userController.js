@@ -398,7 +398,6 @@ export async function shopPage(req, res) {
         req.session.pageNum = parseInt(req.query.page ?? 1);
         req.session.perpage = 6; 
         let docCount;
-        console.log(category,sort,search,'dfghjk');
         if (category) {
              findConditions = {
                 list: false,

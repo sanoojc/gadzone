@@ -518,17 +518,33 @@ export async function addCoupon(req, res) {
         console.log(err);
     }
 }
+// export async function showCoupon(req, res) {
+//     try {
+//         const coupons = await couponModel.find().lean()
+//         const coupon = coupons.map(item => {
+//             return { ...item, expiry: item.expiry.toLocaleDateString() }
+//         })
+//         res.render('admin/coupon', { coupon })
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
 export async function showCoupon(req, res) {
     try {
-        const coupons = await couponModel.find().lean()
-        const coupon = coupons.map(item => {
-            return { ...item, expiry: item.expiry.toLocaleDateString() }
-        })
-        res.render('admin/coupon', { coupon })
+      const coupons = await couponModel.find().lean()
+      const coupon = coupons.map(item => {
+        if (item.expiry instanceof Date && !isNaN(item.expiry)) {
+          return { ...item, expiry: item.expiry.toLocaleDateString() }
+        } else {
+          return item
+        }
+      })
+      res.render('admin/coupon', { coupon })
     } catch (err) {
-        console.log(err);
+      console.log(err)
     }
-}
+  }
+  
 export async function getEditCoupon(req, res) {
     try {
         const coupon = await couponModel.findOne({ _id: req.params.id }).lean()
