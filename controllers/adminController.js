@@ -163,6 +163,10 @@ export async function salesReport(req, res) {
         if (req.query.startDate) startDate = new Date(req.query.startDate);
         if (req.query.endDate) endDate = new Date(req.query.endDate);
         const currentDate = new Date();
+        startDate.setHours(0,0,0,0)
+        endDate.setHours(24,0,0,0)
+
+        console.log("date",startDate,"end",endDate);
         switch (req.query.filter) {
             case 'thisYear':
                 startDate = new Date(currentDate.getFullYear(), 0, 1);
@@ -182,20 +186,17 @@ export async function salesReport(req, res) {
                 break;
             default:
                 if (!req.query.filter && !req.query.startDate) filter = "lastWeek";
-        }
-        startDate.setHours(0, 0, 0, 0)
-        endDate.setHours(24, 0, 0, 0)
+            }
         let salesCount = 0;
         let deliveredOrders
         let salesSum = 0
         let result
         if (req.query.startDate || req.query.endDate || req.query.filter) {
-
             if (req.query.startDate) {
-                startDate = new Date(req.query.startDate);
+                startDate = new Date(startDate);
             }
             if (req.query.endDate) {
-                endDate = new Date(req.query.endDate);
+                endDate = new Date(endDate);
             }
             if (req.query.filter) {
                 filter = req.query.filter;
@@ -235,15 +236,14 @@ export async function salesReport(req, res) {
                 }
             ]);
             salesSum = result[0]?.totalPrice ?? 0
-            
         }
         const users = await orderModel.distinct('address.name')
         const userCount = users.length
-       
         for (const i of deliveredOrders) {
             i.dispatch = new Date(i.dispatch).toLocaleDateString()
         }
         console.log(salesSum)
+        console.log(startDate,endDate,'sdfghjksdfghj');
         res.render("admin/salesReport", { userCount, salesCount, salesSum, deliveredOrders })
     } catch (error) {
         console.log(error)
@@ -426,13 +426,17 @@ export async function addCategory(req, res) {
         const { categoryName } = req.body
         const category = await categoryModel.findOne({ categoryName });
         if (category) {
-            return res.render('admin/addCoupon', { error: true, message: 'category already exists' })
+            return res.render('admin/addCategory', { error: true, message: 'category already exists' })
         } else {
+            if(categoryName==''){
+                return res.render('admin/addCategory', { error: true, message: 'please enter category name' })
+            }else{
+                const categories = new categoryModel({ categoryName })
+                await categories.save()
+                console.log(categories)
+                res.redirect('/admin/showCategories')
+            }
 
-            const categories = new categoryModel({ categoryName })
-            await categories.save()
-            console.log(categories)
-            res.redirect('/admin/showCategories')
         }
     } catch (err) {
         console.log(err);
@@ -458,8 +462,12 @@ export async function editCategory(req, res) {
     try {
         const _id = req.params.id
         const { categoryName } = req.body
-        const category = await categoryModel.findOneAndUpdate({ _id }, { $set: { categoryName } }).lean()
-        res.redirect('/admin/showCategories')
+        if(categoryName==''){
+            return res.render('admin/addCategory', { error: true, message: 'please enter category name' })
+        }else{
+            const category = await categoryModel.findOneAndUpdate({ _id }, { $set: { categoryName } }).lean()
+            res.redirect('/admin/showCategories')
+        }
     } catch (err) {
         console.log(err);
     }
@@ -500,16 +508,20 @@ export async function addCoupon(req, res) {
                 if(cashback>minAmount){
                     return res.render('admin/addCoupon',{error:true,message:'cashback must be lower than Amount'})
                 }else{
+                    if(cashback>0&&minAmount>0){
+                        const coupon = await new couponModel({ name, code, minAmount, cashback, expiry })
+                        coupon.save((err, data) => {
+                            if (err) {
+                                console.log(err)
+                            }
+                            else {
+                                res.redirect('/admin/showCoupon')
+                            }
+                        })
+                    }else{
+                        return  res.render('admin/addCoupon',{error:true, message:'cannot add negative numbers'})
+                    }
 
-                    const coupon = await new couponModel({ name, code, minAmount, cashback, expiry })
-                    coupon.save((err, data) => {
-                        if (err) {
-                            console.log(err)
-                        }
-                        else {
-                            res.redirect('/admin/showCoupon')
-                        }
-                    })
                 }
 
             }
@@ -601,13 +613,17 @@ export async function getAddOffer(req, res) {
 export async function addOffer(req, res) {
     try {
         const { name, url } = req.body;
+        const banner=await offerModel.findOne({name})
         const image = req.file;
-        console.log(req.file)
         if (image == "" || name == "" || url == "") {
-            res.redirect('/admin/addOffer')
+           return res.render('admin/addOffer',{error:true,message:'please fill all details'})
         } else {
-            await offerModel.create({ name, url, image })
-            res.redirect('/admin/getOfferPage')
+            if(banner){
+                return res.render('admin/addOffer',{error:true,message:'banner is already created'})
+            }else{
+                await offerModel.create({ name, url, image })
+                res.redirect('/admin/getOfferPage')
+            }
         }
     } catch (err) {
         res.render('admin/addOffer')

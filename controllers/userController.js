@@ -608,7 +608,7 @@ export async function postCheckout(req, res) {
                     paymentType: payment,
                     paymentStatus: 'paid',
                     userId: req.session.user.id,
-                    quantity: cartQuantity[item.id],
+                    quantity: cartQuantity[item._id],
                     total:totalAmount,
                     address
                 })

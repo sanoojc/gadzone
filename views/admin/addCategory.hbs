@@ -149,6 +149,9 @@
                             <input type="text" class="form-control" name="categoryName">
                         </div>
                     </div>
+                     {{#if error}}
+                    <div class="text-center "><h5 class="text-danger">{{message}}</h5></div>
+                    {{/if}}
                    
                    
                     <div class="row mb-3 d-flex justify-content-center ">
