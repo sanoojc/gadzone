@@ -40,7 +40,6 @@ router.get('/resetPassword',getResetPassword)
 router.get('/setPassword',getSetPassword)
 router.get('/return/:id',returnOrder)
 
-
 router.post('/login',userLogin)
 router.post('/signup',userSignup)
 router.post('/addAddress',addAdress)
@@ -50,7 +49,5 @@ router.post('/checkout', postCheckout)
 router.post('/editAddress/:id', editAddress)
 router.post('/setPassword',resetPass)
 router.post('/enterOtp',enterOtp)
-
-
 
 export default router

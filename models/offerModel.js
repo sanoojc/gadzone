@@ -8,6 +8,5 @@ const offerSchema =mongoose.Schema({
         default:true
     }
 })
-
 const offerModel=mongoose.model('offer', offerSchema);
 export default offerModel

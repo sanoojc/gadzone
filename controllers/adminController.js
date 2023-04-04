@@ -132,7 +132,6 @@ export async function getAddProduct(req, res) {
     try {
 
         const categories = await categoryModel.find().lean()
-        console.log(category.categoryName);
         res.render('admin/addProduct', { categories })
     } catch (err) {
         console.log(err); 
@@ -165,8 +164,6 @@ export async function salesReport(req, res) {
         const currentDate = new Date();
         startDate.setHours(0,0,0,0)
         endDate.setHours(24,0,0,0)
-
-        console.log("date",startDate,"end",endDate);
         switch (req.query.filter) {
             case 'thisYear':
                 startDate = new Date(currentDate.getFullYear(), 0, 1);
@@ -257,7 +254,6 @@ export async function addProducts(req, res) {
         // const categories=await categoryModel.find({list:false}).lean()
         if (productName == '' || productPrice == '' || category == '' || mrp == '' || description == '' || quantity == '') {
             return res.render('admin/addProduct', { error: true, message: 'please fill all the fields' })
-
         } else {
             if (req.files?.mainImage && req.files?.sideImages) {
                 if (mrp >= productPrice &&mrp>0) {
@@ -304,7 +300,8 @@ export async function addProducts(req, res) {
 export async function getEditProduct(req, res) {
     try {
         let product = await productModel.findOne({ _id: req.params.id }).lean()
-        res.render('admin/editProduct', { product })
+        const categories=await categoryModel.find({list:false}).lean()
+        res.render('admin/editProduct', { product,categories })
     } catch (err) {
         console.log(err);
     }
@@ -313,6 +310,7 @@ export async function editProduct(req, res) {
     try {
         const _id = req.params.id
         const { productName, productPrice, category, description, quantity, mrp } = req.body
+        console.log(req.body)
         if (productName == '' || productPrice == '' || category == '' || mrp == '' || description == '' || quantity == ''){
             return res.render('admin/editProduct', { error: true, message: 'please fill all the fields' })
         }else{
@@ -392,8 +390,6 @@ export async function editProduct(req, res) {
  
             }
         }
-
-       
     } catch (err) {
         console.log(err);
     }
@@ -423,7 +419,8 @@ export async function getAddCategory(req, res) {
 }
 export async function addCategory(req, res) {
     try {
-        const { categoryName } = req.body
+        let cat=req.body.categoryName
+        const  categoryName  = cat.toLowerCase()
         const category = await categoryModel.findOne({ categoryName });
         if (category) {
             return res.render('admin/addCategory', { error: true, message: 'category already exists' })
@@ -461,12 +458,18 @@ export async function getEditcategory(req, res) {
 export async function editCategory(req, res) {
     try {
         const _id = req.params.id
-        const { categoryName } = req.body
+        const  categoryName  = req.body.categoryName.toLowerCase()
+        const cat=await categoryModel.findOne({categoryName})
         if(categoryName==''){
             return res.render('admin/addCategory', { error: true, message: 'please enter category name' })
         }else{
-            const category = await categoryModel.findOneAndUpdate({ _id }, { $set: { categoryName } }).lean()
-            res.redirect('/admin/showCategories')
+            if(cat){
+                return res.render('admin/addCategory', { error: true, message: 'category already exist' })
+
+            }else{
+                const category = await categoryModel.findOneAndUpdate({ _id }, { $set: { categoryName } }).lean()
+                res.redirect('/admin/showCategories')
+            }
         }
     } catch (err) {
         console.log(err);

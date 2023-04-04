@@ -4,7 +4,6 @@ import verifyAdmin from '../middleware/verifyAdmin.js'
 import { addProducts, adminLogin, listProduct, editProduct, userBan,displayUser, displayProducts, addCategory, editCategory, listCategory, showCategory, addOffer, getOfferPage, adminLogout, getAdminLogin, addCoupon, editCoupon, showCoupon, listCoupon, getAddProduct, getAdminHome, getEditProduct, showOrders, getEditOffer, editOffer, getEditcategory, getAddCategory, getViewOrder, updateOrder, monthRevenue, getAddCoupon, getEditCoupon, getAddOffer, listOffer, salesReport, search } from '../controllers/adminController.js'
 
 const router=express.Router()
-
 const Storage=multer.diskStorage({
     destination:"public/uploads",
     filename:(req,file,cb)=>{
@@ -14,17 +13,12 @@ const Storage=multer.diskStorage({
 const upload=multer({
     storage:Storage
 })
-
-
 router.get('/', getAdminHome)
 router.get('/login',getAdminLogin)
 router.post('/login', adminLogin)
 router.get('/logout',adminLogout)
 
 router.use(verifyAdmin)
-
-
-
 
 router.get('/users',displayUser)
 router.get('/products',displayProducts)

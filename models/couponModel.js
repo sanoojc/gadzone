@@ -25,7 +25,6 @@ const couponSchema=mongoose.Schema({
         type:Boolean,
         default:false
     }
-
 })
 const couponModel=mongoose.model('coupon',couponSchema)
 export default couponModel

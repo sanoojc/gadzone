@@ -142,15 +142,19 @@
             <div class="row">
                 <!-- General Form Elements -->
                 <h2 class="text-center pb-4 pt-4">ADD CATEGORY</h2>
-                <form method="post" action="/admin/addCategory" >
+                <form name="formName" method="post" action="/admin/addCategory" onsubmit="return categoryFn()" >
                     <div class="row mb-3">
-                        <label for="inputText" class="col-sm-2 col-form-label">category Name :</label>
+                        <label  for="inputText" class="col-sm-2 col-form-label">category Name :</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="categoryName">
+                            <input type="text" class="form-control" name="categoryName" id="categoryId">
                         </div>
                     </div>
+                    <div class="text-center ">
+                    <label class="text-danger" id="label" for="" ><h5 ></label>
+
+                    </div>
                      {{#if error}}
-                    <div class="text-center "><h5 class="text-danger">{{message}}</h5></div>
+                    <div class="text-center "><h5 id="error" class="text-danger">{{message}}</h5></div>
                     {{/if}}
                    
                    
@@ -168,6 +172,19 @@
     </main><!-- End #main -->
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
+
+            <script>
+              let text=document.formName.categoryName
+                    document.getElementById('label').innerHTML=""
+              function categoryFn(){
+                if(text.value.charCodeAt()==32){
+                    document.getElementById('label').innerHTML="please enter category name"
+                    document.getElementById('error').innerHTML=""
+                    return false
+
+                }
+              }
+            </script>
 
     <!-- Vendor JS Files -->
     <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>

@@ -3,7 +3,6 @@ export default function verifyAdmin(req,res,next){
         next()
     }
     else{
-        
         res.redirect('/admin/login')
     }
 }

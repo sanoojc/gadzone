@@ -635,7 +635,7 @@ export async function postCheckout(req, res) {
                         customer_phone: '8589812098',
                     },
                     order_meta: {
-                        return_url: "http://localhost:8000/verifyPayment?order_id={order_id}",
+                        return_url: "https://gadzone.store/verifyPayment?order_id={order_id}",
                     },
                 },
             };
@@ -843,7 +843,6 @@ export async function returnOrder (req, res) {
         console.log(err)
     }
 }
-
 export async function logout(req, res) {
     try{
 
@@ -853,5 +852,3 @@ export async function logout(req, res) {
         console.log(err)
     }
 }
-
-

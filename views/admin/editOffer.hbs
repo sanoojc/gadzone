@@ -164,6 +164,9 @@
                             <input class="form-control" type="file" id="formFile" name="image" value="{{offer.image}}">
                         </div>
                     </div>
+                    {{#if error}}
+                     <div class="text-center text-danger"><h5>{{message}}</h5></div>
+                     {{/if}}
                     <div class="row mb-3 d-flex justify-content-center ">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
