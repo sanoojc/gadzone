@@ -252,7 +252,7 @@ export async function addProducts(req, res) {
     try {
         const { productName, productPrice, category, mrp, description, quantity } = req.body;
         // const categories=await categoryModel.find({list:false}).lean()
-        if (productName == '' || productPrice == '' || category == '' || mrp == '' || description == '' || quantity == '') {
+        if (productName == ''|| productPrice == ''|| category == '' || mrp == '' || description == '' || quantity == '') {
             return res.render('admin/addProduct', { error: true, message: 'please fill all the fields' })
         } else {
             if (req.files?.mainImage && req.files?.sideImages) {
@@ -425,7 +425,7 @@ export async function addCategory(req, res) {
         if (category) {
             return res.render('admin/addCategory', { error: true, message: 'category already exists' })
         } else {
-            if(categoryName==''){
+            if(categoryName.charCodeAt()==32 || categoryName==''){
                 return res.render('admin/addCategory', { error: true, message: 'please enter category name' })
             }else{
                 const categories = new categoryModel({ categoryName })
